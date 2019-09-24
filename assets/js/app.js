@@ -133,3 +133,54 @@ box.onclick=function () {
 document.getElementsByTagName('article')[0].appendChild(box);
 
 }
+// Asynchrous Calls
+let goToThisPage=new Promise(function (resolve,reject) {
+    let isComplete=true;
+
+    if(isComplete){
+        resolve("This is Completed");
+    }
+    else {
+        reject("This is false");
+    }
+});
+
+goToThisPage.then((result)=>{
+     console.log(result);
+},(error)=>{
+ console.log(error);
+});
+
+let turnOnComputer=function () {
+  return new Promise((resolve, reject) =>{
+      reject("Computer is On");
+      console.log("turnOnComputer");
+  });
+};
+
+let openBrowser=function (msg) {
+    return new Promise((resolve, reject) =>{
+        resolve(msg+ "Browser is Open");
+        console.log("openBrowser");
+    });
+};
+
+let goToThisPage4=function (msg) {
+    return new Promise((resolve, reject) =>{
+        resolve(msg+"goToThisPage2 is Open");
+        console.log("goToThisPage4");
+    });
+};
+// turnOnComputer().then((result)=>{
+//    return openBrowser(result);
+// }).then((result)=>{
+// return goToThisPage2(result);
+// }).then((result)=>{
+//     console.log("We are Done "+ result);
+// });
+
+Promise.all([turnOnComputer(),openBrowser(),goToThisPage4()]).then(function () {
+   console.log("All Done");
+}).catch((error)=>{
+    console.log("This is an error "+error);
+});
